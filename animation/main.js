@@ -102,7 +102,7 @@ $(function() {
 	};
 
 
-	d3.json("/chart_data.json", function(error, json) {
+	d3.json("chart_data.json", function(error, json) {
 		if (error) return console.warn(error);
 		draw(json);
 	});
