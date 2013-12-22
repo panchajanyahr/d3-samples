@@ -102,6 +102,9 @@ $(function() {
 			.attr("class", "b-highlight")
 			.attr("r", 10);
 
+		chart.append("rect")
+			.attr("class", "b-highlight-shadow");
+
 		chart.append("text")
 			.attr("class", "b-param-text")
 			.text("$10.00");
@@ -116,6 +119,14 @@ $(function() {
 					.duration(duration)
 					.attr("cx", xScale(new Date(selectedData["A"])))
 					.attr("cy", bScale(selectedData["B"]));
+
+				chart.select("rect.b-highlight-shadow")
+					.transition()
+					.duration(duration)
+					.attr("x", xScale(new Date(selectedData["A"])) - 10)
+					.attr("y", bScale(selectedData["B"]) + 12)
+					.attr("width", 20)
+					.attr("height", baseLineHeight - (bScale(selectedData["B"]) + 12));
 
 				chart.select("rect.d-param")
 					.transition()
