@@ -38,15 +38,24 @@
 	text-anchor: middle;
 }
 
+#controls {
+	width: 160px; 
+	margin: 20px auto;
+}
+
 #controls i {
 	color: #333333;
 	cursor: pointer;
-	width: 120px; 
-	margin: 20px auto;
+	font-size: 30px;
+	margin: 0;
 }
 
 #controls i:hover {
 	color: #14B694;
 }
 
+#container {
+	width:800px;
+	margin-left: 50px;
+}
 

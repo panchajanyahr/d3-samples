@@ -6,11 +6,11 @@ var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
 var baseLineHeight = chartHeight * 0.6;
 var current, next, prev, playback;
-var duration = 300;
+var animationDuration = 300;
 var startedPlayback = false;
 
 $(function() {
-	var container = d3.select("#container");
+	var container = d3.select("#chart_container");
 
 	var svg = container.append("svg")
 						.attr("width", fullWidth)
@@ -131,13 +131,13 @@ $(function() {
 
 				chart.select("circle.b-highlight")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("cx", bx)
 					.attr("cy", by);
 
 				chart.select("rect.b-highlight-shadow")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", bShadowX)
 					.attr("y", bShadowY)
 					.attr("width", 20)
@@ -145,39 +145,39 @@ $(function() {
 
 				chart.select("text.b-param-text")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", bTextX)
 					.attr("y", bTextY)
 					.text("$" + selectedData["B"]);
 
 				chart.select("text.h-param-text")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", bx + 20)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["H"]);
 
 				chart.select("text.i-param-text")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", bx + 20)
 					.attr("y", (bShadowY + bShadowHeight / 2) + 20)
 					.text(selectedData["I"]);
 
 				chart.select("rect.d-param")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("width", deScale(selectedData["D"]));
 
 				chart.select("rect.e-param")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
 
 				chart.select("text.g-param-text")
 					.transition()
-					.duration(duration)
+					.duration(animationDuration)
 					.attr("x", chartWidth / 2)
 					.attr("y", chartHeight + 20)
 					.text(selectedData["I"]);
@@ -213,7 +213,7 @@ $(function() {
 			if (!next()) {
 				pause();
 			}
-		}, duration);
+		}, animationDuration);
 	};
 
 	pause = function() {
