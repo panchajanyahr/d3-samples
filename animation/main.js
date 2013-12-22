@@ -106,27 +106,60 @@ $(function() {
 			.attr("class", "b-highlight-shadow");
 
 		chart.append("text")
-			.attr("class", "b-param-text")
-			.text("$10.00");
+			.attr("class", "b-param-text");
+
+		chart.append("text")
+			.attr("class", "h-param-text");
+
+		chart.append("text")
+			.attr("class", "i-param-text");
 
 		show = function(i) {
 			if (i >= 0 && i < data.length) {
 				current = i;
 				var selectedData = data[i];
+				var bx = xScale(new Date(selectedData["A"]));
+				var by = bScale(selectedData["B"]);
+				var bShadowX = bx - 10;
+				var bShadowY = by + 12;
+				var bShadowHeight = baseLineHeight - bShadowY;
+				var bTextX = bx - 20;
+				var bTextY = by - 20;
 
 				chart.select("circle.b-highlight")
 					.transition()
 					.duration(duration)
-					.attr("cx", xScale(new Date(selectedData["A"])))
-					.attr("cy", bScale(selectedData["B"]));
+					.attr("cx", bx)
+					.attr("cy", by);
 
 				chart.select("rect.b-highlight-shadow")
 					.transition()
 					.duration(duration)
-					.attr("x", xScale(new Date(selectedData["A"])) - 10)
-					.attr("y", bScale(selectedData["B"]) + 12)
+					.attr("x", bShadowX)
+					.attr("y", bShadowY)
 					.attr("width", 20)
-					.attr("height", baseLineHeight - (bScale(selectedData["B"]) + 12));
+					.attr("height", bShadowHeight);
+
+				chart.select("text.b-param-text")
+					.transition()
+					.duration(duration)
+					.attr("x", bTextX)
+					.attr("y", bTextY)
+					.text("$" + selectedData["B"]);
+
+				chart.select("text.h-param-text")
+					.transition()
+					.duration(duration)
+					.attr("x", bx + 20)
+					.attr("y", bShadowY + bShadowHeight / 2)
+					.text(selectedData["H"]);
+
+				chart.select("text.i-param-text")
+					.transition()
+					.duration(duration)
+					.attr("x", bx + 20)
+					.attr("y", (bShadowY + bShadowHeight / 2) + 20)
+					.text(selectedData["I"]);
 
 				chart.select("rect.d-param")
 					.transition()
@@ -138,13 +171,6 @@ $(function() {
 					.duration(duration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
-
-				chart.select("text.b-param-text")
-					.transition()
-					.duration(duration)
-					.attr("x", xScale(new Date(selectedData["A"])) - 20)
-					.attr("y", bScale(selectedData["B"]) - 20)
-					.text("$" + selectedData["B"]);
 
 				return true;				
 			}
