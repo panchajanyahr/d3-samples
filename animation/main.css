@@ -41,9 +41,12 @@
 #controls i {
 	color: #333333;
 	cursor: pointer;
+	width: 120px; 
+	margin: 20px auto;
 }
 
 #controls i:hover {
 	color: #14B694;
 }
+
 
