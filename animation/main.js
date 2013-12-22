@@ -207,8 +207,6 @@ $(function() {
 	});
 
 	start = function() {
-		$('.playback').removeClass("play");
-		$('.playback').addClass("pause");
 		playback = setInterval(function() {
 			if (!next()) {
 				pause();
@@ -217,19 +215,19 @@ $(function() {
 	};
 
 	pause = function() {
-		$('.playback').removeClass("pause");
-		$('.playback').addClass("play");
 		clearTimeout(playback);
 	};
 
-	$(".playback").click(function(e) { 
-		if ($(this).hasClass("playing")) {
-			pause();
-			$(this).removeClass("playing");
-		} else {
-			$(this).addClass("playing");
-			start(); 
-		}
+	$(".play").click(function(e) { 
+		$(".play").hide();
+		$(".pause").show();
+		start();
+	});
+
+	$(".pause").click(function(e) { 
+		$(".pause").hide();
+		$(".play").show();
+		pause();
 	});
 
 	$(".backward").click(function() { pause(); prev(); });
@@ -237,6 +235,9 @@ $(function() {
 	$(".forward").click(function() { pause(); next(); });
 
 	$(".stop").click(function() { pause(); show(0); });
+
+	$('#controls i').popup()
+	$('.pause').hide();
 
 });
 

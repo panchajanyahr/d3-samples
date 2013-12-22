@@ -2,6 +2,7 @@
 	<head>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.min.js"></script>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.10.0/javascript/semantic.min.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.10.0/css/semantic.css">
 		<link rel="stylesheet" type="text/css" href="main.css">
@@ -10,12 +11,13 @@
 		<div id="container">
 			<div id="chart_container"></div>
 			<div id="controls">
-				<i class="step backward icon"></i>
-				<i class="playback play icon"></i>
-				<i class="stop icon"></i>
-				<i class="step forward icon"></i>
+				<i class="step backward icon" data-content="Step back" data-position="bottom center" data-variation="inverted"></i>
+				<i class="play icon" data-content="Start" data-position="bottom center" data-variation="inverted"></i>
+				<i class="pause icon" data-content="Pause" data-position="bottom center" data-variation="inverted"></i>
+				<i class="stop icon" data-content="Stop/Reset" data-position="bottom center" data-variation="inverted"></i>
+				<i class="step forward icon" data-content="Step forward" data-position="bottom center" data-variation="inverted"></i>
 			</div>
-
 		</div>
+
 	</body>
 </html>
