@@ -1,9 +1,10 @@
 var fullHeight = 500;
 var fullWidth = 800;
-var margin = { left: 0, right: 0, top: 0, bottom: 0};
-var width = fullWidth - margin.left - margin.right;
-var height = fullHeight - margin.top - margin.bottom;
-var baseLineHeight = height * 0.6;
+var margin = { left: 0, right: 0, top: 0, bottom: 20};
+var padding = { left: 15, right: 15, top: 0, bottom: 1};
+var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
+var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
+var baseLineHeight = chartHeight * 0.6;
 var current, next, prev, playback;
 var duration = 300;
 var startedPlayback = false;
@@ -15,19 +16,30 @@ $(function() {
 						.attr("width", fullWidth)
 						.attr("height", fullHeight);
 
-	svg.append("line")
+	var chart = svg.append("g")
+					.attr("class", "chart")
+					.attr("transform", "translate(" + (margin.left + padding.left) + ", " + (margin.top + padding.top) + ")");
+
+	var chartContainer = svg.append("g")
+					.attr("class", "chart-container")
+					.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+	var xLegend = svg.append("g")
+					.attr("transform", "translate(" + 0 + ", " + chartHeight + ")");
+
+	chartContainer.append("line")
 		.attr("x1", 0)
 		.attr("y1", 0)
 		.attr("x2", 0)
-		.attr("y2", fullHeight)
+		.attr("y2", chartHeight)
 		.style("stroke", "black")
 		.style("stroke-width", "3");
 
-	svg.append("line")
+	chartContainer.append("line")
 		.attr("x1", 0)
-		.attr("y1", fullHeight)
+		.attr("y1", chartHeight)
 		.attr("x2", fullWidth)
-		.attr("y2", fullHeight)
+		.attr("y2", chartHeight)
 		.style("stroke", "black")
 		.style("stroke-width", "3");
 
@@ -37,7 +49,7 @@ $(function() {
 		});
 
 		var xScale = d3.time.scale()
-                    	.range([0, width])
+                    	.range([0, chartWidth])
                 		.domain(d3.extent(data, function(d) { return new Date(d["A"]); }));
 
     	var bScale = d3.scale.linear()
@@ -45,27 +57,52 @@ $(function() {
     					.domain([d3.min(data, function(d) { return d["B"] }) - 1, 
 								 d3.max(data, function(d) { return d["B"] })]);
 
+    	var deScale = d3.scale.linear()
+    					.range([0, chartWidth])
+    					.domain([0, 1]);
+
 		var b = d3.svg.line()
 					.x(function(d) { return xScale(new Date(d["A"])); })
 					.y(function(d) { return bScale(d["B"]); });
 
-		svg.append("path")
+		xLegend.append("text")
+				.attr("x", 0)
+				.attr("y", margin.bottom)
+				.text(data[0]["A"]);
+
+		xLegend.append("text")
+				.attr("x", fullWidth - 60)
+				.attr("y", margin.bottom)
+				.text(data[data.length - 1]["A"]);
+
+		chart.append("rect")
+			.attr("class", "d-param")
+			.style("fill", "#77ABD3")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("height", chartHeight);
+
+		chart.append("rect")
+			.attr("class", "e-param")
+			.style("fill", "#DDF0DC")
+			.attr("y", 0)
+			.attr("height", chartHeight);
+
+        chart.append("line")
+        	.attr("x1", 0)
+        	.attr("y1", baseLineHeight)
+        	.attr("x2", chartWidth)
+        	.attr("y2", baseLineHeight)
+        	.style("stroke", "black")
+			.style("stroke-dasharray", "5,5");
+
+		chart.append("path")
 			.attr("d", b(data))
 			.attr("stroke", "blue")
             .attr("stroke-width", 2)
             .attr("fill", "none");
 
-        svg.append("line")
-        	.attr("x1", 0)
-        	.attr("y1", baseLineHeight)
-        	.attr("x2", width)
-        	.attr("y2", baseLineHeight)
-        	.style("stroke", "black")
-			.style("stroke-dasharray", "5,5");
-
-
-
-		svg.append("circle")
+		chart.append("circle")
 			.attr("class", "b-highlight")
 			.style("fill", "none")
 			.style("stroke", "red")
@@ -75,13 +112,24 @@ $(function() {
 		show = function(i) {
 			if (i >= 0 && i < data.length) {
 				current = i;
-				var firstData = data[i];
+				var selectedData = data[i];
 
-				svg.select("circle.b-highlight")
+				chart.select("circle.b-highlight")
 					.transition()
 					.duration(duration)
-					.attr("cx", xScale(new Date(firstData["A"])))
-					.attr("cy", bScale(firstData["B"]));
+					.attr("cx", xScale(new Date(selectedData["A"])))
+					.attr("cy", bScale(selectedData["B"]));
+
+				chart.select("rect.d-param")
+					.transition()
+					.duration(duration)
+					.attr("width", deScale(selectedData["D"]));
+
+				chart.select("rect.e-param")
+					.transition()
+					.duration(duration)
+					.attr("x", deScale(selectedData["D"]))
+					.attr("width", deScale(selectedData["E"]));
 
 				return true;				
 			}
