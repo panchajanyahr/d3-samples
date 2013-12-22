@@ -33,21 +33,21 @@ $(function() {
 
 	draw = function(data) {
 		data.sort(function(a, b) {
-			return new Date(a["date"]).getTime() - new Date(b["date"]).getTime();
+			return new Date(a["A"]).getTime() - new Date(b["A"]).getTime();
 		});
 
 		var xScale = d3.time.scale()
                     	.range([0, width])
-                		.domain(d3.extent(data, function(d) { return new Date(d["date"]); }));
+                		.domain(d3.extent(data, function(d) { return new Date(d["A"]); }));
 
     	var bScale = d3.scale.linear()
     					.range([baseLineHeight, 0])
-    					.domain([d3.min(data, function(d) { return d["param1"] }) - 1, 
-								 d3.max(data, function(d) { return d["param1"] })]);
+    					.domain([d3.min(data, function(d) { return d["B"] }) - 1, 
+								 d3.max(data, function(d) { return d["B"] })]);
 
 		var b = d3.svg.line()
-					.x(function(d) { return xScale(new Date(d["date"])); })
-					.y(function(d) { return bScale(d["param1"]); });
+					.x(function(d) { return xScale(new Date(d["A"])); })
+					.y(function(d) { return bScale(d["B"]); });
 
 		svg.append("path")
 			.attr("d", b(data))
@@ -80,8 +80,8 @@ $(function() {
 				svg.select("circle.b-highlight")
 					.transition()
 					.duration(duration)
-					.attr("cx", xScale(new Date(firstData["date"])))
-					.attr("cy", bScale(firstData["param1"]));
+					.attr("cx", xScale(new Date(firstData["A"])))
+					.attr("cy", bScale(firstData["B"]));
 
 				return true;				
 			}
