@@ -37,3 +37,13 @@
 .g-param-text {
 	text-anchor: middle;
 }
+
+#controls i {
+	color: #333333;
+	cursor: pointer;
+}
+
+#controls i:hover {
+	color: #14B694;
+}
+
