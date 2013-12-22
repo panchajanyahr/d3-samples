@@ -1,6 +1,6 @@
-var fullHeight = 500;
+var fullHeight = 450;
 var fullWidth = 800;
-var margin = { left: 0, right: 0, top: 50, bottom: 20};
+var margin = { left: 0, right: 0, top: 35, bottom: 20};
 var padding = { left: 25, right: 25, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
@@ -8,6 +8,12 @@ var baseLineHeight = chartHeight * 0.6;
 var current, next, prev, playback;
 var animationDuration = 300;
 var startedPlayback = false;
+var labels = {
+	"f-param" : "F COLUMN LABEL",
+	"g-param" : "G COLUMN LABEL",
+	"h-param" : "H COLUMN LABEL",
+	"i-param" : "I COLUMN LABEL"
+}
 
 $(function() {
 	var container = d3.select("#chart_container");
@@ -109,13 +115,21 @@ $(function() {
 			.attr("class", "b-param-text");
 
 		chart.append("text")
-			.attr("class", "h-param-text");
+			.attr("class", "h-param-text")
+			.append("tspan")
+			.attr("class", "value");
 
 		chart.append("text")
-			.attr("class", "i-param-text");
+			.attr("class", "i-param-text")
+			.append("tspan")
+			.attr("class", "value");
 
 		chart.append("text")
-			.attr("class", "g-param-text");
+			.attr("class", "g-param-text")
+			.attr("x", chartWidth / 2)
+			.attr("y", chartHeight + 20)
+			.append("tspan")
+			.attr("class", "value");
 
 		show = function(i) {
 			if (i >= 0 && i < data.length) {
@@ -150,18 +164,23 @@ $(function() {
 					.attr("y", bTextY)
 					.text("$" + selectedData["B"]);
 
-				chart.select("text.h-param-text")
+				chart.select("text.h-param-text tspan.value")
 					.transition()
 					.duration(animationDuration)
 					.attr("x", bx + 20)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["H"]);
 
-				chart.select("text.i-param-text")
+				chart.select("text.i-param-text tspan.value")
 					.transition()
 					.duration(animationDuration)
 					.attr("x", bx + 20)
 					.attr("y", (bShadowY + bShadowHeight / 2) + 20)
+					.text(selectedData["I"]);
+
+				chart.select("text.g-param-text tspan.value")
+					.transition()
+					.duration(animationDuration)
 					.text(selectedData["I"]);
 
 				chart.select("rect.d-param")
@@ -174,13 +193,6 @@ $(function() {
 					.duration(animationDuration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
-
-				chart.select("text.g-param-text")
-					.transition()
-					.duration(animationDuration)
-					.attr("x", chartWidth / 2)
-					.attr("y", chartHeight + 20)
-					.text(selectedData["I"]);
 
 				return true;				
 			}
@@ -197,7 +209,10 @@ $(function() {
 		};
 
 		show(0);
-
+		$.each(labels, function(k, v) {
+			$('input.' + k).val(v);
+			setLabel(k, v);
+		});
 	};
 
 
@@ -238,11 +253,25 @@ $(function() {
 
 	$(".stop").click(function() { pause(); show(0); });
 
-	$(".settings").click(function() { alert("Coming soon!"); });
-
 	$('#controls i').popup()
 
 	$('.pause').hide();
+
+	setLabel = function(key, value) {
+		var texts = d3.select('text.'+key+'-text')
+						.selectAll('tspan.text')
+						.data([value]);
+
+		texts.enter()
+			.append('tspan')
+			.attr('class', 'text');
+
+		texts.text(" " + value);
+	};
+
+	$('#configuration input').keyup(function() {
+		setLabel($(this).attr('class'), $(this).val());
+	});
 
 });
 
