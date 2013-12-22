@@ -238,7 +238,10 @@ $(function() {
 
 	$(".stop").click(function() { pause(); show(0); });
 
+	$(".settings").click(function() { alert("Coming soon!"); });
+
 	$('#controls i').popup()
+
 	$('.pause').hide();
 
 });
