@@ -207,6 +207,9 @@ $(function() {
 	});
 
 	start = function() {
+		$(".play").hide();
+		$(".pause").show();
+
 		playback = setInterval(function() {
 			if (!next()) {
 				pause();
@@ -215,18 +218,17 @@ $(function() {
 	};
 
 	pause = function() {
+		$(".pause").hide();
+		$(".play").show();
+
 		clearTimeout(playback);
 	};
 
 	$(".play").click(function(e) { 
-		$(".play").hide();
-		$(".pause").show();
 		start();
 	});
 
 	$(".pause").click(function(e) { 
-		$(".pause").hide();
-		$(".play").show();
 		pause();
 	});
 
