@@ -1,7 +1,7 @@
 var fullHeight = 500;
 var fullWidth = 800;
-var margin = { left: 0, right: 0, top: 15, bottom: 20};
-var padding = { left: 15, right: 15, top: 0, bottom: 1};
+var margin = { left: 0, right: 0, top: 50, bottom: 20};
+var padding = { left: 25, right: 25, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
 var baseLineHeight = chartHeight * 0.6;
@@ -114,6 +114,9 @@ $(function() {
 		chart.append("text")
 			.attr("class", "i-param-text");
 
+		chart.append("text")
+			.attr("class", "g-param-text");
+
 		show = function(i) {
 			if (i >= 0 && i < data.length) {
 				current = i;
@@ -171,6 +174,13 @@ $(function() {
 					.duration(duration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
+
+				chart.select("text.g-param-text")
+					.transition()
+					.duration(duration)
+					.attr("x", chartWidth / 2)
+					.attr("y", chartHeight + 20)
+					.text(selectedData["I"]);
 
 				return true;				
 			}

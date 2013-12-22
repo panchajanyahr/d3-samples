@@ -33,3 +33,7 @@
 .b-highlight-shadow {
 	fill: #FFD5D0;
 }
+
+.g-param-text {
+	text-anchor: middle;
+}
