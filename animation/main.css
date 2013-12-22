@@ -1,0 +1,31 @@
+.chart-container line {
+	stroke: black;
+	stroke-width: 3;
+}
+
+.chart-container line.x-axis {
+	stroke-width: 2;
+}
+
+.chart-container line.y-axis {
+	stroke-width: 3;
+}
+
+.d-param {
+	fill: #77ABD3;
+}
+
+.e-param {
+	fill: #DDF0DC;
+}
+
+.f-param {
+	stroke: black;
+	stroke-dasharray: 5,5;
+}
+
+.b-highlight {
+	fill: none;
+	stroke: red;
+	stroke-width: 5;
+}

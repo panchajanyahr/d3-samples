@@ -1,6 +1,6 @@
 var fullHeight = 500;
 var fullWidth = 800;
-var margin = { left: 0, right: 0, top: 0, bottom: 20};
+var margin = { left: 0, right: 0, top: 15, bottom: 20};
 var padding = { left: 15, right: 15, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
@@ -25,23 +25,21 @@ $(function() {
 					.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 	var xLegend = svg.append("g")
-					.attr("transform", "translate(" + 0 + ", " + chartHeight + ")");
+					.attr("transform", "translate(" + 0 + ", " + (margin.top + chartHeight) + ")");
 
 	chartContainer.append("line")
+		.attr("class", "y-axis")
 		.attr("x1", 0)
 		.attr("y1", 0)
 		.attr("x2", 0)
-		.attr("y2", chartHeight)
-		.style("stroke", "black")
-		.style("stroke-width", "3");
+		.attr("y2", chartHeight);
 
 	chartContainer.append("line")
+		.attr("class", "x-axis")
 		.attr("x1", 0)
 		.attr("y1", chartHeight)
 		.attr("x2", fullWidth)
-		.attr("y2", chartHeight)
-		.style("stroke", "black")
-		.style("stroke-width", "3");
+		.attr("y2", chartHeight);
 
 	draw = function(data) {
 		data.sort(function(a, b) {
@@ -77,24 +75,21 @@ $(function() {
 
 		chart.append("rect")
 			.attr("class", "d-param")
-			.style("fill", "#77ABD3")
 			.attr("x", 0)
 			.attr("y", 0)
 			.attr("height", chartHeight);
 
 		chart.append("rect")
 			.attr("class", "e-param")
-			.style("fill", "#DDF0DC")
 			.attr("y", 0)
 			.attr("height", chartHeight);
 
         chart.append("line")
+        	.attr("class", "f-param")
         	.attr("x1", 0)
         	.attr("y1", baseLineHeight)
         	.attr("x2", chartWidth)
-        	.attr("y2", baseLineHeight)
-        	.style("stroke", "black")
-			.style("stroke-dasharray", "5,5");
+        	.attr("y2", baseLineHeight);
 
 		chart.append("path")
 			.attr("d", b(data))
