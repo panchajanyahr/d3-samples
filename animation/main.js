@@ -59,9 +59,6 @@ $(function() {
     					.range([0, chartWidth])
     					.domain([0, 1]);
 
-		var b = d3.svg.line()
-					.x(function(d) { return xScale(new Date(d["A"])); })
-					.y(function(d) { return bScale(d["B"]); });
 
 		xLegend.append("text")
 				.attr("x", 0)
@@ -91,6 +88,10 @@ $(function() {
         	.attr("x2", chartWidth)
         	.attr("y2", baseLineHeight);
 
+		var b = d3.svg.line()
+					.x(function(d) { return xScale(new Date(d["A"])); })
+					.y(function(d) { return bScale(d["B"]); });
+
 		chart.append("path")
 			.attr("d", b(data))
 			.attr("stroke", "blue")
@@ -99,10 +100,11 @@ $(function() {
 
 		chart.append("circle")
 			.attr("class", "b-highlight")
-			.style("fill", "none")
-			.style("stroke", "red")
-			.style("stroke-width", "5")
 			.attr("r", 10);
+
+		chart.append("text")
+			.attr("class", "b-param-text")
+			.text("$10.00");
 
 		show = function(i) {
 			if (i >= 0 && i < data.length) {
@@ -125,6 +127,13 @@ $(function() {
 					.duration(duration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
+
+				chart.select("text.b-param-text")
+					.transition()
+					.duration(duration)
+					.attr("x", xScale(new Date(selectedData["A"])) - 20)
+					.attr("y", bScale(selectedData["B"]) - 20)
+					.text("$" + selectedData["B"]);
 
 				return true;				
 			}
