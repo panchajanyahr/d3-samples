@@ -142,7 +142,15 @@ $(function() {
 				var by = bfScale(selectedData["B"]);
 				var fy = bfScale(selectedData["F"]);
 				var bShadowX = bx - 10, bShadowY, bShadowHeight;
-				var bTextX = bx - 20, bTextY;
+				var bTextX = bx - 20, bTextY, hiParamX, hiParamTextAnchor;
+
+				if (bx < chartWidth / 2) {
+					hiParamX = bx + 20;
+					hiParamTextAnchor = "start";
+				} else {
+					hiParamX = bx - 20;
+					hiParamTextAnchor = "end";
+				}
 
 				if (by < fy) {
 					bShadowY = by + 12;
@@ -175,17 +183,27 @@ $(function() {
 					.attr("y", bTextY)
 					.text("$" + selectedData["B"]);
 
+				chart.select("text.h-param-text")
+					.transition()
+					.duration(animationDuration)
+					.attr("text-anchor", hiParamTextAnchor);
+
 				chart.select("text.h-param-text tspan.value")
 					.transition()
 					.duration(animationDuration)
-					.attr("x", bx + 20)
+					.attr("x", hiParamX)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["H"]);
+
+				chart.select("text.i-param-text")
+					.transition()
+					.duration(animationDuration)
+					.attr("text-anchor", hiParamTextAnchor);
 
 				chart.select("text.i-param-text tspan.value")
 					.transition()
 					.duration(animationDuration)
-					.attr("x", bx + 20)
+					.attr("x", hiParamX)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["I"]);
 
