@@ -322,19 +322,17 @@ $(function() {
 		clearTimeout(playback);
 	};
 
-	$(".play").click(function(e) { 
-		start();
-	});
+	$(".play").click(function(e) { start(); });
 
-	$(".pause").click(function(e) { 
-		pause();
-	});
+	$(".pause").click(function(e) { pause(); });
 
 	$(".backward").click(function() { pause(); prev(); });
 
 	$(".forward").click(function() { pause(); next(); });
 
 	$(".stop").click(function() { pause(); show(0); });
+
+	$(".repeat").click(function() { pause(); show(0); start(); });
 
 	$('#controls i').popup()
 
