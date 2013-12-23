@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.10.0/javascript/semantic.min.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.10.0/css/semantic.css">
+		<link rel="stylesheet" type="text/css" href="main.css">
+	</head>
+	<body>
+		<div id="container">
+			<div id="chart_container"></div>
+			<div id="controls">
+				<i class="step backward icon" data-content="Step back" data-position="bottom center" data-variation="inverted"></i>
+				<i class="play icon" data-content="Start" data-position="bottom center" data-variation="inverted"></i>
+				<i class="pause icon" data-content="Pause" data-position="bottom center" data-variation="inverted"></i>
+				<i class="stop icon" data-content="Stop/Reset" data-position="bottom center" data-variation="inverted"></i>
+				<i class="step forward icon" data-content="Step forward" data-position="bottom center" data-variation="inverted"></i>
+			</div>
+			<div id="configuration">
+				<div class="ui form segment">
+				  <div class="two fields">
+				    <div class="field">
+				      <label>Animation Duration</label>
+				      <input class="duration" type="text">
+				    </div>
+				    <div class="field param">
+				      <label>F Parameter</label>
+				      <input class="f-param" type="text">
+				    </div>
+				  </div>
+				  <div class="two fields">
+				    <div class="field param">
+				      <label>G Parameter</label>
+				      <input class="g-param" type="text">
+				    </div>
+				    <div class="field param">
+				      <label>H Parameter</label>
+				      <input class="h-param" type="text">
+				    </div>
+				  </div>
+
+				  <div class="two fields">
+  				    <div class="field param">
+				      <label>I Parameter</label>
+				      <input class="i-param" type="text">
+				    </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

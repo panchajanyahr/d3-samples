@@ -1,0 +1,84 @@
+text {
+	font-family: sans-serif;
+}
+.chart-container line {
+	stroke: black;
+	stroke-width: 3;
+}
+
+.chart-container line.x-axis {
+	stroke-width: 2;
+}
+
+.chart-container line.y-axis {
+	stroke-width: 3;
+}
+
+.d-param {
+	fill: #77ABD3;
+}
+
+.e-param {
+	fill: #DDF0DC;
+}
+
+.f-param {
+	stroke: black;
+	stroke-dasharray: 5,5;
+}
+
+.j-param {
+	stroke: orange;
+	stroke-width: 2;
+	stroke-dasharray: 5,5;
+}
+
+.k-param {
+	stroke: red;
+	stroke-width: 2;
+	stroke-dasharray: 5,5;
+}
+
+.b-param-text {
+	text-anchor: middle;
+}
+
+.b-highlight {
+	fill: none;
+	stroke: red;
+	stroke-width: 4;
+}
+
+.b-highlight-shadow {
+	fill: #FFD5D0;
+}
+
+.g-param-text {
+	text-anchor: middle;
+	fill: gray;
+}
+
+#controls {
+	width: 161px; 
+	margin: 20px auto;
+}
+
+#controls i {
+	color: #333333;
+	cursor: pointer;
+	font-size: 30px;
+	margin: 0;
+}
+
+#controls i:hover {
+	color: #14B694;
+}
+
+#container {
+	width:800px;
+	margin-left: 50px;
+}
+
+.chart-bottom text {
+	fill: gray;
+}
