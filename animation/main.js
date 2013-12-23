@@ -58,9 +58,12 @@ $(function() {
 		var bExtent = d3.extent(data, function(d) { return d["B"]; });
 		var fExtent = d3.extent(data, function(d) { return d["F"]; });
 		var bfExtent = d3.extent(bExtent.concat(fExtent));
+		var roundUpBy5 = function(num) { return 5 * Math.ceil(num / 5); };
+		var roundDownBy5 = function(num) { return 5 * Math.floor(num / 5); };
+		
     	var bfScale = d3.scale.linear()
     					.range([chartHeight, 0])
-    					.domain([Math.ceil(bfExtent[0] * 0.9), Math.ceil(bfExtent[1] * 1.01)]);
+    					.domain([roundDownBy5(bfExtent[0] * 0.9), roundUpBy5(bfExtent[1] * 1.01)]);
 
     	var deScale = d3.scale.linear()
     					.range([0, chartWidth])
