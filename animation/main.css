@@ -39,6 +39,10 @@ text {
 	stroke-dasharray: 5,5;
 }
 
+.b-param-text {
+	text-anchor: middle;
+}
+
 .b-highlight {
 	fill: none;
 	stroke: red;

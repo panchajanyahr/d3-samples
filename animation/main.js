@@ -1,7 +1,7 @@
 var fullHeight = 450;
 var fullWidth = 800;
 var margin = { left: 0, right: 0, top: 35, bottom: 20};
-var padding = { left: 25, right: 25, top: 0, bottom: 1};
+var padding = { left: 30, right: 25, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
 var current, next, prev, playback;
@@ -162,7 +162,7 @@ $(function() {
 				var by = bfScale(selectedData["B"]);
 				var fy = bfScale(selectedData["F"]);
 				var bShadowX = bx - 10, bShadowY, bShadowHeight;
-				var bTextX = bx - 20, bTextY, hiParamX, hiParamTextAnchor;
+				var bTextX = bx, bTextY, hiParamX, hiParamTextAnchor;
 
 				if (bx < chartWidth / 2) {
 					hiParamX = bx + 20;
