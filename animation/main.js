@@ -90,6 +90,16 @@ $(function() {
 			.attr("y", 0)
 			.attr("height", chartHeight);
 
+		chart.append("line")
+			.attr("class", "j-param")
+			.attr("y1", 0)
+			.attr("y2", chartHeight);
+
+		chart.append("line")
+			.attr("class", "k-param")
+			.attr("y1", 0)
+			.attr("y2", chartHeight);
+
         chart.append("line")
         	.attr("class", "f-param")
         	.attr("x1", 0)
@@ -240,6 +250,23 @@ $(function() {
 					.duration(animationDuration)
 					.attr("y1", bfScale(selectedData["F"]))
     		    	.attr("y2", bfScale(selectedData["F"]));
+
+		    	var jParamX = deScale((selectedData["D"] + selectedData["E"]) * selectedData["J"]);
+		    	var kParamX = deScale((selectedData["D"] + selectedData["E"]) * selectedData["K"]);
+
+				chart.select("line.j-param")
+					.transition()
+					.duration(animationDuration)
+					.attr("x1", jParamX)
+    		    	.attr("x2", jParamX)
+    		    	.style("display", jParamX > 0 ? "block" : "none");
+
+				chart.select("line.k-param")
+					.transition()
+					.duration(animationDuration)
+					.attr("x1", kParamX)
+    		    	.attr("x2", kParamX)
+    		    	.style("display", kParamX > 0 ? "block" : "none");
 
 				return true;				
 			}
