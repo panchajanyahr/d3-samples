@@ -68,9 +68,10 @@ $(function() {
     					.range([chartHeight, 0])
     					.domain([roundDownBy5(bfExtent[0] * 0.9), roundUpBy5(bfExtent[1] * 1.01)]);
 
+		var deMax = d3.max(data, function(d) { return d["D"] + d["E"]; });
     	var deScale = d3.scale.linear()
     					.range([0, chartWidth])
-    					.domain([0, d3.max(data, function(d) { return d["D"] + d["E"]; })]);
+    					.domain([0, deMax]);
 
 		chartBottom.append("text")
 				.attr("x", 0)
@@ -259,8 +260,8 @@ $(function() {
 					.attr("y1", bfScale(selectedData["F"]))
     		    	.attr("y2", bfScale(selectedData["F"]));
 
-		    	var jParamX = deScale((selectedData["D"] + selectedData["E"]) * selectedData["J"]);
-		    	var kParamX = deScale((selectedData["D"] + selectedData["E"]) * selectedData["K"]);
+		    	var jParamX = deScale(selectedData["J"]);
+		    	var kParamX = deScale(selectedData["K"]);
 
 				chart.select("line.j-param")
 					.transition()
