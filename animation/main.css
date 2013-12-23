@@ -1,3 +1,6 @@
+text {
+	font-family: sans-serif;
+}
 .chart-container line {
 	stroke: black;
 	stroke-width: 3;
@@ -25,13 +28,13 @@
 }
 
 .j-param {
-	stroke: red;
+	stroke: orange;
 	stroke-width: 2;
 	stroke-dasharray: 5,5;
 }
 
 .k-param {
-	stroke: orange;
+	stroke: red;
 	stroke-width: 2;
 	stroke-dasharray: 5,5;
 }
@@ -48,6 +51,7 @@
 
 .g-param-text {
 	text-anchor: middle;
+	fill: gray;
 }
 
 #controls {
@@ -69,4 +73,8 @@
 #container {
 	width:800px;
 	margin-left: 50px;
+}
+
+.chart-bottom text {
+	fill: gray;
 }

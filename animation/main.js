@@ -29,7 +29,8 @@ $(function() {
 					.attr("class", "chart-container")
 					.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
-	var xLegend = svg.append("g")
+	var chartBottom = svg.append("g")
+					.attr("class", "chart-bottom")
 					.attr("transform", "translate(" + 0 + ", " + (margin.top + chartHeight) + ")");
 
 	chartContainer.append("line")
@@ -69,14 +70,15 @@ $(function() {
     					.range([0, chartWidth])
     					.domain([0, d3.max(data, function(d) { return d["D"] + d["E"]; })]);
 
-		xLegend.append("text")
+		chartBottom.append("text")
 				.attr("x", 0)
 				.attr("y", margin.bottom)
 				.text(data[0]["A"]);
 
-		xLegend.append("text")
-				.attr("x", fullWidth - 60)
+		chartBottom.append("text")
+				.attr("x", chartWidth)
 				.attr("y", margin.bottom)
+				.style("text-anchor", "middle")
 				.text(data[data.length - 1]["A"]);
 
 		chart.append("rect")
