@@ -5,14 +5,16 @@ var padding = { left: 30, right: 25, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
 var current, next, prev, playback;
-var animationDuration = 300;
 var startedPlayback = false;
-var labels = {
+var defaultValues = {
+	"duration": 300,
 	"f-param" : "F COLUMN LABEL",
 	"g-param" : "G COLUMN LABEL",
 	"h-param" : "H COLUMN LABEL",
 	"i-param" : "I COLUMN LABEL"
 }
+
+var animationDuration = function() { return parseInt($("input.duration").val()); };
 
 $(function() {
 	var container = d3.select("#chart_container");
@@ -184,13 +186,13 @@ $(function() {
 
 				chart.select("circle.b-highlight")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("cx", bx)
 					.attr("cy", by);
 
 				chart.select("rect.b-highlight-shadow")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", bShadowX)
 					.attr("y", bShadowY)
 					.attr("width", 20)
@@ -198,43 +200,43 @@ $(function() {
 
 				chart.select("text.b-param-text")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", bTextX)
 					.attr("y", bTextY)
 					.text("$" + selectedData["B"]);
 
 				chart.select("text.h-param-text")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("text-anchor", hiParamTextAnchor);
 
 				chart.select("text.h-param-text tspan.value")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", hiParamX)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["H"]);
 
 				chart.select("text.i-param-text")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("text-anchor", hiParamTextAnchor);
 
 				chart.select("text.i-param-text tspan.value")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", hiParamX)
 					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["I"]);
 
 				chart.select("text.g-param-text tspan.value")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.text(": $" + selectedData["G"]);
 
 				chart.select("text.f-param-text tspan.value")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", 5)
 					.attr("y", bfScale(selectedData["F"]))
 					.attr("dy", "1.35em")
@@ -242,18 +244,18 @@ $(function() {
 
 				chart.select("rect.d-param")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("width", deScale(selectedData["D"]));
 
 				chart.select("rect.e-param")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
 
 				chart.select("line.f-param")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("y1", bfScale(selectedData["F"]))
     		    	.attr("y2", bfScale(selectedData["F"]));
 
@@ -262,14 +264,14 @@ $(function() {
 
 				chart.select("line.j-param")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x1", jParamX)
     		    	.attr("x2", jParamX)
     		    	.style("display", jParamX > 0 ? "block" : "none");
 
 				chart.select("line.k-param")
 					.transition()
-					.duration(animationDuration)
+					.duration(animationDuration())
 					.attr("x1", kParamX)
     		    	.attr("x2", kParamX)
     		    	.style("display", kParamX > 0 ? "block" : "none");
@@ -289,7 +291,7 @@ $(function() {
 		};
 
 		show(0);
-		$.each(labels, function(k, v) {
+		$.each(defaultValues, function(k, v) {
 			$('input.' + k).val(v);
 			setLabel(k, v);
 		});
@@ -309,7 +311,7 @@ $(function() {
 			if (!next()) {
 				pause();
 			}
-		}, animationDuration);
+		}, animationDuration());
 	};
 
 	pause = function() {
@@ -349,7 +351,7 @@ $(function() {
 		texts.text(" " + value);
 	};
 
-	$('#configuration input').keyup(function() {
+	$('#configuration .param input').keyup(function() {
 		setLabel($(this).attr('class'), $(this).val());
 	});
 
