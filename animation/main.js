@@ -60,7 +60,7 @@ $(function() {
 		var bfExtent = d3.extent(bExtent.concat(fExtent));
 		var roundUpBy5 = function(num) { return 5 * Math.ceil(num / 5); };
 		var roundDownBy5 = function(num) { return 5 * Math.floor(num / 5); };
-		
+
     	var bfScale = d3.scale.linear()
     					.range([chartHeight, 0])
     					.domain([roundDownBy5(bfExtent[0] * 0.9), roundUpBy5(bfExtent[1] * 1.01)]);
@@ -122,6 +122,7 @@ $(function() {
 			.attr("class", "value");
 
 		chart.append("text")
+			.attr("dy", "1.35em")
 			.attr("class", "i-param-text")
 			.append("tspan")
 			.attr("class", "value");
@@ -139,11 +140,19 @@ $(function() {
 				var selectedData = data[i];
 				var bx = xScale(new Date(selectedData["A"]));
 				var by = bfScale(selectedData["B"]);
-				var bShadowX = bx - 10;
-				var bShadowY = by + 12;
-				var bShadowHeight = bfScale(selectedData["F"]) - bShadowY;
-				var bTextX = bx - 20;
-				var bTextY = by - 20;
+				var fy = bfScale(selectedData["F"]);
+				var bShadowX = bx - 10, bShadowY, bShadowHeight;
+				var bTextX = bx - 20, bTextY;
+
+				if (by < fy) {
+					bShadowY = by + 12;
+					bShadowHeight = fy - bShadowY;					
+					bTextY = by - 20;
+				} else {
+					bShadowY = fy;
+					bShadowHeight = by - bShadowY - 12;
+					bTextY = by + 40;
+				}
 
 				chart.select("circle.b-highlight")
 					.transition()
@@ -177,7 +186,7 @@ $(function() {
 					.transition()
 					.duration(animationDuration)
 					.attr("x", bx + 20)
-					.attr("y", (bShadowY + bShadowHeight / 2) + 20)
+					.attr("y", bShadowY + bShadowHeight / 2)
 					.text(selectedData["I"]);
 
 				chart.select("text.g-param-text tspan.value")
