@@ -141,11 +141,15 @@ $(function() {
 			.append("tspan")
 			.attr("class", "value");
 
-		chart.append("text")
+		var gParamText = chart.append("text")
 			.attr("class", "g-param-text")
 			.attr("x", chartWidth / 2)
-			.attr("y", chartHeight + 20)
-			.append("tspan")
+			.attr("y", chartHeight + 20);
+
+		gParamText.append("tspan")
+			.attr("class", "text");
+
+		gParamText.append("tspan")
 			.attr("class", "value");
 
 		show = function(i) {
@@ -224,7 +228,7 @@ $(function() {
 				chart.select("text.g-param-text tspan.value")
 					.transition()
 					.duration(animationDuration)
-					.text(selectedData["I"]);
+					.text(": $" + selectedData["G"]);
 
 				chart.select("text.f-param-text tspan.value")
 					.transition()
