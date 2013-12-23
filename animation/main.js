@@ -96,6 +96,11 @@ $(function() {
         	.attr("x1", 0)
         	.attr("x2", chartWidth);
 
+		chart.append("text")
+			.attr("class", "f-param-text")
+			.append("tspan")
+			.attr("class", "value");
+
 		var b = d3.svg.line()
 					.x(function(d) { return xScale(new Date(d["A"])); })
 					.y(function(d) { return bfScale(d["B"]); });
@@ -211,6 +216,14 @@ $(function() {
 					.transition()
 					.duration(animationDuration)
 					.text(selectedData["I"]);
+
+				chart.select("text.f-param-text tspan.value")
+					.transition()
+					.duration(animationDuration)
+					.attr("x", 5)
+					.attr("y", bfScale(selectedData["F"]))
+					.attr("dy", "1.35em")
+					.text("$" + selectedData["F"]);
 
 				chart.select("rect.d-param")
 					.transition()
