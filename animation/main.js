@@ -67,8 +67,7 @@ $(function() {
 
     	var deScale = d3.scale.linear()
     					.range([0, chartWidth])
-    					.domain([0, 1]);
-
+    					.domain([0, d3.max(data, function(d) { return d["D"] + d["E"]; })]);
 
 		xLegend.append("text")
 				.attr("x", 0)
