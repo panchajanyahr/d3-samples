@@ -4,7 +4,6 @@ var margin = { left: 0, right: 0, top: 35, bottom: 20};
 var padding = { left: 25, right: 25, top: 0, bottom: 1};
 var chartWidth = fullWidth - margin.left - margin.right - padding.left - padding.right;
 var chartHeight = fullHeight - margin.top - margin.bottom - padding.top - padding.bottom;
-var baseLineHeight = chartHeight * 0.6;
 var current, next, prev, playback;
 var animationDuration = 300;
 var startedPlayback = false;
@@ -56,10 +55,12 @@ $(function() {
                     	.range([0, chartWidth])
                 		.domain(d3.extent(data, function(d) { return new Date(d["A"]); }));
 
-    	var bScale = d3.scale.linear()
-    					.range([baseLineHeight, 0])
-    					.domain([d3.min(data, function(d) { return d["B"] }) - 1, 
-								 d3.max(data, function(d) { return d["B"] })]);
+		var bExtent = d3.extent(data, function(d) { return d["B"]; });
+		var fExtent = d3.extent(data, function(d) { return d["F"]; });
+		var bfExtent = d3.extent(bExtent.concat(fExtent));
+    	var bfScale = d3.scale.linear()
+    					.range([chartHeight, 0])
+    					.domain([Math.ceil(bfExtent[0] * 0.9), Math.ceil(bfExtent[1] * 1.01)]);
 
     	var deScale = d3.scale.linear()
     					.range([0, chartWidth])
@@ -90,13 +91,11 @@ $(function() {
         chart.append("line")
         	.attr("class", "f-param")
         	.attr("x1", 0)
-        	.attr("y1", baseLineHeight)
-        	.attr("x2", chartWidth)
-        	.attr("y2", baseLineHeight);
+        	.attr("x2", chartWidth);
 
 		var b = d3.svg.line()
 					.x(function(d) { return xScale(new Date(d["A"])); })
-					.y(function(d) { return bScale(d["B"]); });
+					.y(function(d) { return bfScale(d["B"]); });
 
 		chart.append("path")
 			.attr("d", b(data))
@@ -136,10 +135,10 @@ $(function() {
 				current = i;
 				var selectedData = data[i];
 				var bx = xScale(new Date(selectedData["A"]));
-				var by = bScale(selectedData["B"]);
+				var by = bfScale(selectedData["B"]);
 				var bShadowX = bx - 10;
 				var bShadowY = by + 12;
-				var bShadowHeight = baseLineHeight - bShadowY;
+				var bShadowHeight = bfScale(selectedData["F"]) - bShadowY;
 				var bTextX = bx - 20;
 				var bTextY = by - 20;
 
@@ -193,6 +192,12 @@ $(function() {
 					.duration(animationDuration)
 					.attr("x", deScale(selectedData["D"]))
 					.attr("width", deScale(selectedData["E"]));
+
+				chart.select("line.f-param")
+					.transition()
+					.duration(animationDuration)
+					.attr("y1", bfScale(selectedData["F"]))
+    		    	.attr("y2", bfScale(selectedData["F"]));
 
 				return true;				
 			}
